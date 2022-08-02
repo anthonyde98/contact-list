@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "contact-list",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

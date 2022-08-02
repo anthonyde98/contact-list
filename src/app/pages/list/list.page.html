@@ -1,0 +1,56 @@
+<ion-content (ionScroll)="setScroll($event)" [scrollEvents]="true">
+  <div class="contenedor-pagina">
+    <div *ngIf="busquedaCard" class="search-card animate__animated animate__fadeInUp">
+      <ion-row>
+        <input type="text" [(ngModel)]="filtro" (keyup)="busqueda()">
+        <ion-list class="radio-list">
+          <ion-radio-group name="radio-group" class="radio-group" [value]="info.contacto.nombre">
+            <ion-item lines="none">
+              <ion-label><ion-icon [name]="icons.platforms.unknow"></ion-icon></ion-label>
+              <ion-radio name="radio" [value]="info.contacto.nombre" (click)="selectRadio(info.contacto.nombre)"></ion-radio>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label><ion-icon [name]="icons.global.relation"></ion-icon></ion-label>
+              <ion-radio name="radio" [value]="info.contacto.relacion" (click)="selectRadio(info.contacto.relacion)"></ion-radio>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label><ion-icon [name]="icons.global.telephone"></ion-icon></ion-label>
+              <ion-radio name="radio" [value]="info.contacto.numeros.plural" (click)="selectRadio(info.contacto.numeros.plural)"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-row>
+    </div>
+    <div *ngIf="noContactos" class="search-card ion-text-center"><p>No hay contactos para mostrar.</p></div>
+    <div class="list">
+      <ion-card id="{{contacto.id}}" class="contact" *ngFor="let contacto of contactos | async; let i = index" [ngStyle]="{'background-color': contacto.color}"
+      (click)="eventGo(i, contacto.id)">
+        <ion-card-title class="title">
+          <p>{{contacto.nombre}}</p>
+        </ion-card-title>
+        <ion-card-content class="body">
+          <div class="relation">
+            <ion-icon [name]="icons.global.relation"></ion-icon>
+            <p>{{contacto.relacion}}</p>
+          </div>
+          <div class="phone">
+            <ion-icon [name]="icons.global.telephone"></ion-icon>
+            <p>{{contacto.numeros[0].numero | phoneFormat}}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="btns">
+      <a [routerLink]="[routes.barraRoutes.setContact, empty]" class="btnAdd">
+        <ion-icon [name]="icons.global.add.normal"></ion-icon>
+      </a>
+      <button class="btnSearch" (click)="busquedaCard = !busquedaCard; busquedaCard ? goToTop() : filtro = empty; busqueda(); ">
+        <ion-icon [name]="icons.global.search"></ion-icon>
+      </button>
+      <a [routerLink]="[routes.barraRoutes.config]" class="btnConfig">
+        <ion-icon [name]="icons.global.settings" class="animate__animated animate__rotateIn"></ion-icon>
+      </a>
+      <app-btn-top *ngIf="btnTop" [content]="content"></app-btn-top>
+    </div>
+  </div>
+</ion-content>

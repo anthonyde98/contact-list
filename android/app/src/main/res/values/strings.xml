@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Lista de contactos</string>
+    <string name="title_activity_main">Lista de contactos</string>
+    <string name="package_name">com.anthonyde98.contactList</string>
+    <string name="custom_url_scheme">com.anthonyde98.contactList</string>
+</resources>

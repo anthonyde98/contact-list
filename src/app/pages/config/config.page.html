@@ -1,0 +1,277 @@
+<ion-content (ionScroll)="setScroll($event)" [scrollEvents]="true" [fullscreen]="true">
+  <div class="contenedor-pagina">
+    <ion-card class="container-title">
+      <ion-card-content>
+        <h2 class="ion-text-center">Configuración</h2>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="finger card" *ngIf="available">
+      <ion-card-title (click)="sectionsBtns.bioAuth ? sectionsBtns.bioAuth = false : sectionsBtns.bioAuth = true">
+        <h2>Reconocimiento de huella dactilar <ion-icon name="{{sectionsBtns.bioAuth ? icons.global.caret.forward : icons.global.caret.down}}"></ion-icon></h2>
+      </ion-card-title>
+      <ion-card-content *ngIf="sectionsBtns.bioAuth">
+        <div class="toggle">
+          <ion-icon [style.Color]="!actived ? 'brown' : 'rgba(256, 256, 256, 0.500)'" [name]="icons.global.close"></ion-icon>
+          <ion-toggle checked="{{actived}}" color="success" (ionChange)="infoConfig($event)"></ion-toggle>
+          <ion-icon [style.Color]="actived ? 'rgb(70, 230, 7)' : 'rgba(256, 256, 256, 0.500)'" [name]="icons.global.finger"></ion-icon>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="other-device card">
+      <ion-card-title (click)="sectionsBtns.platforms ? sectionsBtns.platforms = false : sectionsBtns.platforms = true">
+          <h2>Usar en Plataforma Web <ion-icon name="{{sectionsBtns.platforms ? icons.global.caret.forward : icons.global.caret.down}}"></ion-icon></h2>
+      </ion-card-title>
+      <ion-card-content *ngIf="sectionsBtns.platforms">
+        <p>Presione para escanear codigo QR</p>
+        <button class="qr-btn" (click)="scan()"><ion-icon [name]="icons.global.qr"></ion-icon></button>
+        <ion-card class="card" *ngIf="dispositivos.length > 1">
+          <ion-card-title>
+            <h3>Dispositivos</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <div class="device" *ngFor="let dispositivo of dispositivos">
+              <div class="content" *ngIf="dispositivo.nombre != info.device.principalDeviceName">
+                <ion-icon class="icon" [name]="icons.devices[dispositivo.tipo]"></ion-icon>
+                <ion-icon class="icon" [name]="icons.platforms[dispositivo.plataforma]"></ion-icon>
+                <p>{{dispositivo.nombre}}</p>
+                <ion-icon class="icon" [name]="icons.navigators[dispositivo.navegador]"></ion-icon>
+                <button (click)="eliminarDispositivo(dispositivo)">
+                  <ion-icon [name]="icons.global.remove"></ion-icon>
+                </button>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="other-info card">
+      <ion-card-title (click)="sectionsBtns.menu ? sectionsBtns.menu = false : sectionsBtns.menu = true">
+        <h2>Opciones principales <ion-icon name="{{sectionsBtns.menu ? icons.global.caret.forward : icons.global.caret.down}}"></ion-icon></h2>
+      </ion-card-title>
+      <ion-card-content *ngIf="sectionsBtns.menu">
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Menú vertical</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>
+              En la ventana de incio de la aplicación aparece 
+              un menú vertical con el que se podrá realizar diferentes acciones. 
+            </p>
+            <div class="menu-btns">
+              <a class="btnAdd btn-example">
+                +
+              </a>
+              <button class="btnSearch btn-example">
+                <ion-icon [name]="icons.global.search"></ion-icon>
+              </button>
+              <a class="btnConfig btn-example">
+                <ion-icon [name]="icons.global.settings" class="animate__animated animate__rotateIn animate__infinite"></ion-icon>
+              </a>
+              <button class="btnTop btn-example animate__animated animate__backInUp animate__infinite">
+                <ion-icon [name]="icons.global.arrows.up"></ion-icon>
+              </button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card add-example">
+          <ion-card-title>
+            <h3>Botón de agregar</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <a class="btnAdd btn-example">
+              +
+            </a>
+            <p>
+              Con este se puede ir a la ventana de añadir un nuevo contacto.
+            </p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card add-example">
+          <ion-card-title>
+            <h3>Botón de busqueda</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <button class="btnSearch btn-example">
+              <ion-icon [name]="icons.global.search"></ion-icon>
+            </button>
+            <p>
+              Este tiene la funcionalidad de mostrar un componente para filtrar la lista de contactos por nombre, relación o números de celular.
+            </p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card add-example">
+          <ion-card-title>
+            <h3>Botón de configuración</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <a class="btnConfig btn-example">
+              <ion-icon [name]="icons.global.settings" class="animate__animated animate__rotateIn animate__infinite"></ion-icon>
+            </a>
+            <p>
+              Al dar click a este botón se abre la ventana de configuración.
+            </p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card add-example">
+          <ion-card-title>
+            <h3>Botón de subir</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <button class="btnTop btn-example animate__animated animate__backInUp animate__infinite">
+              <ion-icon [name]="icons.global.arrows.up"></ion-icon>
+            </button>
+            <p>
+              Con este se puede ir al inicio de la ventana.
+            </p>
+            <p>
+              Este botón aparece en varias ventanas y se muestra al alejarse de la parte superior.
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card> 
+    <ion-card class="internet-accion card">
+      <ion-card-title (click)="sectionsBtns.internetAccions ? sectionsBtns.internetAccions = false : sectionsBtns.internetAccions = true">
+        <h2>Acciones (con internet) <ion-icon name="{{sectionsBtns.internetAccions ? icons.global.caret.forward : icons.global.caret.down}}"></ion-icon></h2>
+      </ion-card-title>
+      <ion-card-content *ngIf="sectionsBtns.internetAccions">
+        <ion-button (click)="gestos()"><ion-icon name="{{ interval ? icons.global.stop : icons.global.play}}"></ion-icon>{{ interval ? "Parar" : "Ver"}} gestos</ion-button>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Deslizar contacto hacia la derecha</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Al deslizar la carta o contenedor del contacto hacia la derecha, este es eliminado.</p>
+            <div id="slide" class="carta-container slide" style="justify-content: center;
+            margin-right: -20px;">
+              <span class="carta">Contacto
+                <ion-icon style="position: absolute" [name]="icons.global.navigate"></ion-icon>
+              </span>
+              <ion-icon [name]="icons.global.arrows.forward"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Deslizar contacto hacia la izquierda</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Al deslizar la carta o contenedor del contacto hacia la izquierda, se abre la aplicación de llamadas del celular.</p>
+            <div id="shake" class="carta-container shake">
+              <ion-icon [name]="icons.global.arrows.back"></ion-icon>
+              <span class="carta">Contacto
+                <ion-icon style="position: absolute" [name]="icons.global.navigate"></ion-icon>
+              </span>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Tap (Toque)</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Al tocar la carta se abre la ventana de detalles del contacto.</p>
+            <div class="carta-container tap">
+              <span id="contact-tap" class="carta">Contacto</span>
+              <ion-icon id="pointer-tap" [name]="icons.global.navigate"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Doble tap (toque)</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Al tocar dos veces la carta (rapidamente), se abre una ventana para editar el contacto.</p>
+            <div class="carta-container tap double">
+              <span id="contact-dtap" class="carta">Contacto</span>
+              <ion-icon id="pointer-dtap" [name]="icons.global.navigate"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="no-internet-accion card">
+      <ion-card-title (click)="sectionsBtns.noInternetAccions ? sectionsBtns.noInternetAccions = false : sectionsBtns.noInternetAccions = true">
+        <h2>Acciones (sin internet) <ion-icon name="{{sectionsBtns.noInternetAccions ? icons.global.caret.forward : icons.global.caret.down}}"></ion-icon></h2>
+      </ion-card-title>
+      <ion-card-content *ngIf="sectionsBtns.noInternetAccions">
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Menú de opciones</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Cuando no hay conexión a internet, en vez de usar los gestos de deslizar para llamar y eliminar, al hacer tap sobre el contacto se muestra un menú de opciones.</p>
+            <p>En este se muestra las opciones de llamar, más información y eliminar.</p>
+            <div class="menu-opciones">
+              <ion-icon class="btn" id='llamar' [name]="icons.global.telephone"></ion-icon>
+              <ion-icon class="btn" id='detalle' [name]="icons.global.detail"></ion-icon>
+              <ion-icon class="btn" id='borrar' [name]="icons.global.delete"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Doble tap (toque)</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>El gesto doble tap se mantiene cuando no hay conexión.</p>
+            <p>Al tocar dos veces la carta (rapidamente), se abre una ventana para editar el contacto.</p>
+            <div class="carta-container tap double">
+              <span class="carta">Contacto</span>
+              <ion-icon class="flecha" [name]="icons.global.navigate"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="other-info card">
+      <ion-card-title (click)="sectionsBtns.otherFeatures ? sectionsBtns.otherFeatures = false : sectionsBtns.otherFeatures = true">
+        <h2>Otras características <ion-icon name="{{sectionsBtns.otherFeatures ? icons.global.caret.forward : icons.global.caret.down}}"></ion-icon></h2>
+      </ion-card-title>
+      <ion-card-content *ngIf="sectionsBtns.otherFeatures">
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Portapapeles</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Al tocar un texto dentro de un contenedor con este icono 
+              <ion-icon class="clipboard" [name]="icons.global.clipboard"></ion-icon> en la parte inferior, 
+              la información se guardará en el portapapeles.
+            </p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Enviar correo o llamar un contacto</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <p>Al tocar un número de telefono en el apartado de detalles,  
+               se abre la aplicación de llamadas.
+            </p>
+            <p>Si un correo es tambien tocado, se abrirá la apliacion de correo.</p>
+            <p>Estos tambien son guardados en el portapapeles.</p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="card">
+          <ion-card-title>
+            <h3>Conexión a internet</h3>
+          </ion-card-title>
+          <ion-card-content>
+            <div class="tipos-conexion">
+              <ion-icon class="net" [name]="icons.global.cloud.online" color="success"></ion-icon>
+              <ion-icon class="net" [name]="icons.global.cloud.offline" color="danger"></ion-icon>
+            </div>
+            <p>
+              En la parte superior de la apicación se muestra un icono que indica si la aplicación esta conectada a internet.
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card> 
+    <div class="btns">
+      <app-btn-top *ngIf="btnTop" [content]="content"></app-btn-top>
+    </div>
+  </div>
+</ion-content>

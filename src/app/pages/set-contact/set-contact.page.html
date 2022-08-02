@@ -1,0 +1,56 @@
+<ion-content (ionScroll)="setScroll($event)" [scrollEvents]="true">
+  <div class="contenedor-pagina">
+    <ion-card class="container-title">
+      <ion-card-content>
+        <h2 class="ion-text-center">{{accion}} contacto</h2>
+      </ion-card-content>
+    </ion-card>
+    <div class="form-container">
+      <form [formGroup]="contactForm" (ngSubmit)="setContacto()">
+        <ion-item class="nombre box" lines="none">
+          <ion-label>Nombre</ion-label>
+          <ion-input type="text" placeholder="Colocar nombre" formControlName="nombre"></ion-input>
+        </ion-item>
+        <ion-item class="relacion box" lines="none"> 
+          <ion-label class="label-width">Relación</ion-label>
+          <ion-select placeholder="Escoger una opción" style="width: 100%" [(ngModel)]="relacionSelected" name="select"
+          okText="Okay" cancelText="Cancelar" [ngModelOptions]="{standalone: true}">
+            <ion-select-option *ngFor="let tipo of relacion" [value]="tipo.nombre" (click)="changeSelectValue(tipo.nombre)">{{tipo.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="descripcion box" lines="none">
+          <ion-label>Descripción</ion-label>
+          <ion-textarea placeholder="Colocar descripción" formControlName="descripcion"></ion-textarea>
+        </ion-item>
+        <div class="telefonos box" formArrayName="numeros">
+          <ion-row class="title-box">
+            <p>Números de contacto</p>
+            <ion-button fill="clear" (click)="agregarInputTelefono()"><ion-icon [name]="icons.global.add.circle"></ion-icon></ion-button>
+          </ion-row>
+          <ion-item class="telefono" lines="none" *ngFor="let contactFormGroup of contactFormGroups.controls; let i = index"
+          [formGroupName]="i">
+            <ion-input type="tel" placeholder="Colocar número" formControlName="numero"></ion-input>
+            <ion-button (click)="eliminarInputTelefono(i)"><ion-icon [name]="icons.global.remove"></ion-icon></ion-button>
+          </ion-item>
+        </div>
+        <ion-item class="correo box" lines="none">
+          <ion-label>Correo</ion-label>
+          <ion-input type="text" placeholder="Colocar correo" formControlName="correo"></ion-input>
+        </ion-item>
+        <div class="colores box">
+          <p>Color de contacto</p>
+          <ion-list class="radio-list">
+            <ion-radio-group name="radio-group" class="radio-group" value="{{colorDefault}}">
+              <ion-item lines="none" *ngFor="let color of colores">
+                <ion-radio name="radio" value="{{color}}"
+                (click)="getColorValue(color)"></ion-radio>
+                <span [ngStyle]="{'background-color': color}"></span>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        <ion-button type="submit" fill="clear" class="btn" [disabled]="contactForm.invalid">{{accion}}</ion-button>
+      </form>
+    </div>
+  </div>
+</ion-content>

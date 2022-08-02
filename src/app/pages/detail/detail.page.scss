@@ -1,0 +1,41 @@
+.container, .objeto{
+    background-color: var(--ion-principal-color);
+    border-radius: 10px;
+}
+
+.objeto{
+    padding: 15px 10px;
+    text-align: center;
+
+    .objeto-title{
+        border-bottom: 1px solid rgba(209, 209, 209, 0.489);
+        padding-bottom: 5px;
+        width: 35%;
+        margin: 0 auto;
+        color: rgba(218, 218, 218, 0.943);
+    }
+    .element{
+        color: rgba(255, 255, 255, 0.893); 
+        font-weight: bold;
+        font-size: 16px;
+        margin: 15px auto
+    }
+    .color{
+        margin: 10px auto;
+        height: 80px; 
+        width: 80px;
+        border-radius: 10px;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.377);
+    }
+
+    .clipboard{
+        position: absolute;
+        right: 3px;
+        bottom: 3px;
+        padding: 2px;
+        border-radius: 6px;
+        background-color: rgba(199, 199, 199, 0.511);
+        color: rgb(133, 133, 133);
+    }
+}
+

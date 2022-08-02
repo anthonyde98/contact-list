@@ -1,0 +1,53 @@
+<ion-content (ionScroll)="setScroll($event)" [scrollEvents]="true">
+  <div class="contenedor-pagina">
+    <ion-card class="container-title">
+      <ion-card-content>
+        <h2 class="ion-text-center">Información de contacto</h2>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="container">
+      <ion-card class="objeto">
+        <h4 class="objeto-title">Nombre</h4>
+        <div class="objeto-elements">
+          <p id="nombre" class="element" (click)="clipboard(contacto.nombre, info.contacto.nombre)">{{contacto.nombre}}</p>
+        </div>
+        <ion-icon class="clipboard" [name]="icons.global.clipboard"></ion-icon>
+      </ion-card>
+      <ion-card class="objeto">
+        <h4 class="objeto-title">Relación</h4>
+        <div class="objeto-elements">
+          <p id="relacion" class="element" (click)="clipboard(contacto.relacion, info.contacto.relacion)">{{contacto.relacion}}</p>
+        </div>
+        <ion-icon class="clipboard" [name]="icons.global.clipboard"></ion-icon>
+      </ion-card>
+      <ion-card class="objeto">
+        <h4 class="objeto-title">Descripción</h4>
+        <div class="objeto-elements">
+          <p id="descripcion" class="element" (click)="clipboard(contacto.descripcion, info.contacto.descripcion)">{{contacto.descripcion}}</p>
+        </div>
+        <ion-icon class="clipboard" [name]="icons.global.clipboard"></ion-icon>
+      </ion-card>
+      <ion-card class="objeto">
+        <h4 class="objeto-title">Números</h4>
+        <div class="objeto-elements">
+          <p id="numero{{i}}" class="element" (click)="clipboard(telefono.numero, info.contacto.numeros.singular + i, info.contacto.numeros.singular)" *ngFor="let telefono of contacto.numeros; let i = index">{{telefono.numero | phoneFormat}}</p>
+        </div>
+        <ion-icon class="clipboard" [name]="icons.global.clipboard"></ion-icon>
+      </ion-card>
+      <ion-card class="objeto">
+        <h4 class="objeto-title">Correo</h4>
+        <div class="objeto-elements">
+          <p id="correo" class="element" (click)="clipboard(contacto.correo, info.contacto.correo)">{{contacto.correo}}</p>
+        </div>
+        <ion-icon class="clipboard" [name]="icons.global.clipboard"></ion-icon>
+      </ion-card>
+      <ion-card class="objeto">
+        <h4 class="objeto-title">Color</h4>
+        <div class="objeto-elements">
+          <div class="element color" [ngStyle]="{'background-color': contacto.color}"></div>
+        </div>
+      </ion-card>
+    </ion-card>
+  </div>
+</ion-content>
+
