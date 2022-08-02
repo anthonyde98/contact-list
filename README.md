@@ -1,6 +1,6 @@
 # ContactList
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6, [Ionic-CLI] version 6.19.1, [Ionic-Framework] version 6.1.4, [CapacitorJs] version 3.5.1
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6, [Ionic](https://ionicframework.com/docs/intro/cli) version 6.19.1, [CapacitorJs](https://capacitorjs.com/docs/getting-started) version 3.5.1
 
 ## Development server
 
