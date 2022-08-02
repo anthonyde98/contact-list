@@ -3,7 +3,7 @@ export const ICONS = {
         desktop: "desktop-outline",
         tablet: "tablet-landscape-outline",
         mobile: "phone-portrait-outline",
-        unknow: "help"
+        unknown: "help"
     },
     platforms: {
         apple: "logo-apple",
@@ -14,7 +14,7 @@ export const ICONS = {
         playstation: "logo-playstation",
         xbox: "logo-xbox",
         nintendo: "game-controller",
-        unknow: "at"
+        unknown: "at"
     },
     navigators: {
         chrome: "logo-chrome",
@@ -22,7 +22,7 @@ export const ICONS = {
         firefox: "logo-firefox",
         safari: "compass",
         samsung: "planet",
-        unknow: "earth"
+        unknown: "earth"
     },
     global: {
         arrows: {
